@@ -33,7 +33,7 @@ bool Parse_HldsData()
 	}
 	else
 	{
-		Con_Printf("[RePatcher]: Found svs.clients function. \n");
+		Con_Printf("[RePatcher]: Found svs.clients function.\n");
 	}
 	
 	g_conversiondata.clients = *(dword *)((dword)addr + 2);
