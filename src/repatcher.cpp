@@ -18,25 +18,40 @@ bool Parse_HldsData()
 		Con_Printf("[RePatcher]: Can't find Host_Ping_f function.\n");
 		return false;
 	}
+	else
+	{
+		Con_Printf("[RePatcher]: Found Host_Ping_f function.\n");
+	}
 
 	// 8B 35 E4 3D 1D 02                             mov     esi, dword [svs.clients]
 	// 83 C4 04                                      add     esp, 4
-	addr = g_engine->findPattern(addr, 128, "8B 35 ? ? ? ? 83 C4 04");
-	if (!addr)
+	addr = g_engine->getSymbolAddress("svs");
+	if (!addr) 
 	{
 		Con_Printf("[RePatcher]: Can't find svs.clients.\n");
 		return false;
 	}
+	else
+	{
+		Con_Printf("[RePatcher]: Found svs.clients function. \n");
+	}
+	
 	g_conversiondata.clients = *(dword *)((dword)addr + 2);
 
 	// 47                                            inc     edi
-	// 81 C6 18 50 00 00                             add     esi, 5018h
+	// 81 C6 18 50 00 00                             add     esi, 5018ho
 	addr = g_engine->findPattern(addr, 128, "47 81 C6 ? ? 00 00");
 	if(!addr)
 	{
 		Con_Printf("[RePatcher]: Can't find sizeof(client_t).\n");
 		return false;
 	}
+	else
+	{
+		Con_Printf("[RePatcher]: Found sizeof(client_t) function.\n");
+	}
+	
+	
 	g_conversiondata.client_size = *(dword *)((dword)addr + 3);
 #else
 	void* addr = g_engine->getSymbolAddress("Host_Ping_f");
@@ -44,6 +59,10 @@ bool Parse_HldsData()
 	{
 		Con_Printf("[RePatcher]: Can't find Host_Ping_f function.\n");
 		return false;
+	}
+	else
+	{
+		Con_Printf("[RePatcher]: Found Host_Ping_f function.\n");
 	}
 
 	// 46                                            inc     esi
@@ -54,6 +73,10 @@ bool Parse_HldsData()
 		Con_Printf("[RePatcher]: Can't find sizeof(client_t).\n");
 		return false;
 	}
+	else
+	{
+		Con_Printf("[RePatcher]: Found sizeof(client_t) function.\n");
+	}
 	g_conversiondata.client_size = *(dword *)((dword)addr + 3);
 
 	addr = g_engine->getSymbolAddress("svs");
@@ -61,6 +84,10 @@ bool Parse_HldsData()
 	{
 		Con_Printf("[RePatcher]: Can't find svs.\n");
 		return false;
+	}
+	else
+	{
+		Con_Printf("[RePatcher]: Found svs. function.\n");
 	}
 	g_conversiondata.clients = *(dword *)((dword)addr + 4);
 #endif

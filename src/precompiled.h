@@ -10,7 +10,7 @@ typedef DWORD	dword;
 typedef WORD	word;
 typedef BYTE	byte;
 
-#define snprintf _snprintf
+//#define snprintf _snprintf
 #else
 #include <elf.h>
 #include <dlfcn.h>
