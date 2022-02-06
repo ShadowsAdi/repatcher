@@ -48,7 +48,7 @@ typedef void* modhandle_t;
 #include <vector>
 #include <list>
 
-#include <eiface.h>
+#include "eiface.h"
 #include <meta_api.h>
 #include "amxxmodule.h"
 
