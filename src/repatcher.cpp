@@ -642,7 +642,7 @@ void Self_Test()
 	if (!g_repatcher->getSymbolAddress("CHookHandlerJit::amx_Push"))
 		Sys_Error("%s: can't find symbol '%s'\n", __FUNCTION__, "CHookHandlerJit::amx_Push");
 	#ifdef _WIN32
-	if (!g_repatcher->findPattern(addr, 128, "47 81 C6 18 ? 00 00"));
+	if (!g_repatcher->getSymbolAddress("getAmxStringTemp"));
 	#else
 	if (!g_repatcher->getSymbolAddress("getAmxStringTemp"))
 	#endif
