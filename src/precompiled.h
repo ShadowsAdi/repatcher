@@ -50,7 +50,7 @@ typedef void* modhandle_t;
 #include <vector>
 #include <list>
 
-#include <meta_api.h>
+#include "meta_api.h"
 #include "amxxmodule.h"
 
 #include "jitasm.h"
