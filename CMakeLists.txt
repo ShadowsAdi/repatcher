@@ -103,6 +103,7 @@ set(REPATCHER_SRCS
 	"src/precompiled.cpp"
 	"src/repatcher.cpp"
 	"src/utils.cpp"
+	"src/libudis86.a"
 )
 
 set(PUBLIC_SRCS

@@ -45,6 +45,29 @@ jobs:
           name: win32
           path: publish/*
           
+  linux:
+    name: 'Linux'
+    runs-on: ubuntu-latest
+    container: s1lentq/linux86buildtools:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Build using Intel C++ Compiler 19.0
+        run: |
+          rm -rf build && CC=icc CXX=icpc cmake -B build && cmake --build build -j8
+
+      - name: Prepare AMXX
+        run: |
+          mkdir -p publish/addons/amxmodx/modules
+
+      - name: Move files
+        run: |
+          mv build/repatcher/repatcher_amxx_i386.so publish/addons/amxmodx/modules/repatcher_amxx_i386.so
+          
   publish:
     name: 'Publish'
     runs-on: ubuntu-latest
