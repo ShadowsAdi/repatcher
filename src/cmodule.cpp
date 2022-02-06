@@ -76,7 +76,12 @@ bool CModule::loadSymbols()
 {
 	SymInitialize(g_hldsProcess.getHandle(), NULL, FALSE);
 	DWORD64 ldwModBase = SymLoadModule64(g_hldsProcess.getHandle(), NULL, m_path, NULL, m_baseAddress, m_imageSize);
-
+	
+	if (ldwModBase == 0)
+	{
+		SymLoadModule(g_hldsProcess.getHandle(), NULL, m_path, NULL, m_baseAddress, m_imageSize);
+	}
+	
 	if (ldwModBase == 0)
 	{
 		setError("Can't load symbols for module %s (%i)\n", m_name, GetLastError());
