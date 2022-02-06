@@ -639,10 +639,14 @@ void Self_Test()
 
 	if (!g_repatcher)
 		Sys_Error("%s: can't load repatcher module - %s\n", __FUNCTION__, g_lastError);
-	if (!g_repatcher->getSymbolAddress("getAmxStringTemp"))
-		Sys_Error("%s: can't find symbol '%s'\n", __FUNCTION__, "getAmxStringTemp");
 	if (!g_repatcher->getSymbolAddress("CHookHandlerJit::amx_Push"))
 		Sys_Error("%s: can't find symbol '%s'\n", __FUNCTION__, "CHookHandlerJit::amx_Push");
+	#ifdef _WIN32
+	if (!g_repatcher->findPattern(addr, 128, "47 81 C6 18 ? 00 00"));
+	#else
+	if (!g_repatcher->getSymbolAddress("getAmxStringTemp"))
+	#endif
+		Sys_Error("%s: can't find symbol '%s'\n", __FUNCTION__, "getAmxStringTemp");
 	if (!g_testPlugin)
 		Sys_Error("%s: can't find amxx test plugin\n", __FUNCTION__);
 
