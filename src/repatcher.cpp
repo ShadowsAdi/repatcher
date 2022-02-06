@@ -23,24 +23,22 @@ bool Parse_HldsData()
 		Con_Printf("[RePatcher]: Found Host_Ping_f function.\n");
 	}
 
-	// 8B 35 E4 3D 1D 02                             mov     esi, dword [svs.clients]
-	// 83 C4 04                                      add     esp, 4
-	addr = g_engine->getSymbolAddress("svs");
+	addr = g_engine->getSymbolAddress("g_psvs");
 	if (!addr) 
 	{
-		Con_Printf("[RePatcher]: Can't find svs.clients.\n");
+		Con_Printf("[RePatcher]: Can't find g_psvs.\n");
 		return false;
 	}
 	else
 	{
-		Con_Printf("[RePatcher]: Found svs.clients function. \n");
+		Con_Printf("[RePatcher]: Found g_psvs function.\n");
 	}
 	
 	g_conversiondata.clients = *(dword *)((dword)addr + 2);
 
 	// 47                                            inc     edi
-	// 81 C6 18 50 00 00                             add     esi, 5018ho
-	addr = g_engine->findPattern(addr, 128, "47 81 C6 ? ? 00 00");
+	// 81 C3 18 50 00 00                             add     esi, 5018ho
+	addr = g_engine->findPattern(addr, 128, "47 81 C3 ? ? 00 00");
 	if(!addr)
 	{
 		Con_Printf("[RePatcher]: Can't find sizeof(client_t).\n");
@@ -67,7 +65,7 @@ bool Parse_HldsData()
 
 	// 46                                            inc     esi
 	// 81 C3 F4 4E 00 00                             add     ebx, 4EF4h
-	addr = g_engine->findPattern(addr, 128, "46 81 C3 ? ? 00 00");
+	addr = g_engine->findPattern(addr, 128, "8B 44 24 04");
 	if (!addr)
 	{
 		Con_Printf("[RePatcher]: Can't find sizeof(client_t).\n");
@@ -79,7 +77,9 @@ bool Parse_HldsData()
 	}
 	g_conversiondata.client_size = *(dword *)((dword)addr + 3);
 
-	addr = g_engine->getSymbolAddress("svs");
+	// 83 3D 00 91 17 00 00  						cmp
+	// C7 05 00 91 17 00 01  						mov
+	addr = g_engine->getSymbolAddress("g_psvs");
 	if (!addr)
 	{
 		Con_Printf("[RePatcher]: Can't find svs.\n");
