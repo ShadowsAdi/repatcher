@@ -10,6 +10,8 @@ typedef DWORD	dword;
 typedef WORD	word;
 typedef BYTE	byte;
 
+#define SELF_TEST
+
 //#define snprintf _snprintf
 #else
 #include <elf.h>
