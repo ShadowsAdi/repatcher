@@ -3,6 +3,7 @@
 #include <psapi.h>
 #include <dbghelp.h>
 #include <eiface.h>
+#include <meta_api.h>
 
 typedef HANDLE	handle_t;
 typedef HMODULE	modhandle_t;
@@ -25,6 +26,7 @@ typedef BYTE	byte;
 #include <errno.h>
 #include <fcntl.h>
 #include "sdk/eiface.h"
+#include "sdk/meta_api.h"
 
 typedef void* handle_t;
 typedef void* modhandle_t;
@@ -50,7 +52,6 @@ typedef void* modhandle_t;
 #include <vector>
 #include <list>
 
-#include "meta_api.h"
 #include "amxxmodule.h"
 
 #include "jitasm.h"
