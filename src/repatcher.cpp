@@ -399,14 +399,14 @@ void Test_ArgConversion()
 	void* func = g_repatcher->getSymbolAddress("Func_ArgConversion");
 
 	if (!func)
-		Con_Printf("%s: can't find Func_ArgConversion function\n", __FUNCTION__);
+		Sys_Error("%s: can't find Func_ArgConversion function\n", __FUNCTION__);
 
 	const char* desc = "void Func_ArgConversion(edict_t* a, int b@<eax>, const char *str, client_t* cl@<ecx>, CBaseMonster* pl, float f@st0, int x@xmm4, float f2)";
 	g_hpre = g_hookManager.createHook(func, desc, true, (void *)Hook_ArgConversion);
 	g_hpost = g_hookManager.createHook(func, desc, false, (void *)Hook_ArgConversion);
 
 	if (!g_hpre || !g_hpost)
-		Con_Printf("%s: can't create hooks.\n", __FUNCTION__);
+		Sys_Error("%s: can't create hooks.\n", __FUNCTION__);
 
 	Amx_BeginTest(test_conversion);
 	check_order = true;
@@ -415,9 +415,9 @@ void Test_ArgConversion()
 
 	int true_order[5] = {chook_pre, amxhook_pre, original_func, chook_post, amxhook_post};
 	if (memcmp(call_order, true_order, sizeof true_order))
-		Con_Printf("%s: invalid call order [%i|%i|%i|%i|%i], expected [%i|%i|%i|%i|%i].\n", __FUNCTION__, call_order[0], call_order[1], call_order[2], call_order[3], call_order[4], true_order[0], true_order[1], true_order[2], true_order[3], true_order[4]);
+		Sys_Error("%s: invalid call order [%i|%i|%i|%i|%i], expected [%i|%i|%i|%i|%i].\n", __FUNCTION__, call_order[0], call_order[1], call_order[2], call_order[3], call_order[4], true_order[0], true_order[1], true_order[2], true_order[3], true_order[4]);
 	if (g_called_func != (chook_pre|chook_post|amxhook_pre|amxhook_post|original_func))
-		Con_Printf("%s: not all functions are called %i.\n", __FUNCTION__, g_called_func);
+		Sys_Error("%s: not all functions are called %i.\n", __FUNCTION__, g_called_func);
 	Con_Printf("[RePatcher]: Test_ArgConversion passed.\n");
 }
 
@@ -640,7 +640,7 @@ void Self_Test()
 	if (!g_repatcher)
 		Con_Printf("%s: can't load repatcher module - %s\n", __FUNCTION__, g_lastError);
 	#ifdef _WIN32
-	void* addr = g_repatcher->findPattern(g_repatcher, 128, "51 8B 09 53 8B 1D 94 92");
+	void* addr = g_repatcher->findStringReference("function getAmxStringTemp");
 	#else
 	void* addr = g_repatcher->getSymbolAddress("getAmxStringTemp");
 	#endif
@@ -648,7 +648,7 @@ void Self_Test()
 		Con_Printf("%s: can't find symbol '%s'\n", __FUNCTION__, "getAmxStringTemp");
 		
 	#ifdef _WIN32
-	addr = g_repatcher->findPattern(g_repatcher, 128, "51 8B 09 53 8B 1D 94 92");
+	addr = g_repatcher->findStringReference("Pushing CHOOK");
 	#else
 	addr = g_repatcher->getSymbolAddress("CHookHandlerJit::amx_Push");
 	#endif
