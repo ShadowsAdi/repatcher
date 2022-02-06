@@ -121,6 +121,13 @@ bool Repatcher_Init()
 		Con_Printf("[RePatcher]: Can't locate engine and gamedll modules.\n");
 		return false;
 	}
+	
+	bool ParsedData = false
+	
+	if(Parse_HldsData())
+	{
+		ParsedData = true
+	}
 
 	if (g_rehldsEngine)
 	{
@@ -131,7 +138,7 @@ bool Repatcher_Init()
 		return true;
 	}
 	
-	return Parse_HldsData();
+	return ParsedData;
 }
 
 void ServerActivate(edict_t *pEdictList, int edictCount, int clientMax)
