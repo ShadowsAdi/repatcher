@@ -25,7 +25,7 @@ all:
 	$(MAKE) repatcher_amxx_i386
 
 repatcher_amxx_i386: $(OBJ_LINUX)
-	$(COMPILER) $(INCLUDE) $(CFLAGS) -c precompiled.h -o$(BIN_DIR)/precompiled.h.gch
+	$(COMPILER) $(INCLUDE) $(CFLAGS) -c src/precompiled.h -o$(BIN_DIR)/src/precompiled.h.gch
 	$(COMPILER) $(INCLUDE) $(CFLAGS) $(OBJ_LINUX) $(LINK) -o$(BIN_DIR)/$(NAME)
 	strip --strip-unneeded $(BIN_DIR)/$(NAME)
 
