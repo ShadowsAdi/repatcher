@@ -638,24 +638,25 @@ void Self_Test()
 #endif
 
 	if (!g_repatcher)
-		Sys_Error("%s: can't load repatcher module - %s\n", __FUNCTION__, g_lastError);
-	
+		Con_Printf("%s: can't load repatcher module - %s\n", __FUNCTION__, g_lastError);
 	#ifdef _WIN32
-	if (!g_repatcher->findPattern(g_repatcher, 128, "51 8B 09 53 8B 1D 94 92"));
+	void* addr = g_repatcher->findPattern(g_repatcher, 128, "51 8B 09 53 8B 1D 94 92");
 	#else
-	if (!g_repatcher->getSymbolAddress("getAmxStringTemp"))
+	void* addr = g_repatcher->getSymbolAddress("getAmxStringTemp");
 	#endif
-		Sys_Error("%s: can't find symbol '%s'\n", __FUNCTION__, "getAmxStringTemp");
+	if (!addr)
+		Con_Printf("%s: can't find symbol '%s'\n", __FUNCTION__, "getAmxStringTemp");
 		
 	#ifdef _WIN32
-	if (!g_repatcher->findPattern(g_repatcher, 128, "51 8B 09 53 8B 1D 94 92"))
+	void* addr = g_repatcher->findPattern(g_repatcher, 128, "51 8B 09 53 8B 1D 94 92");
 	#else
-	if (!g_repatcher->getSymbolAddress("CHookHandlerJit::amx_Push"))
+	void* addr = g_repatcher->getSymbolAddress("CHookHandlerJit::amx_Push");
 	#endif
-		Sys_Error("%s: can't find symbol '%s'\n", __FUNCTION__, "CHookHandlerJit::amx_Push");
+	if(!addr)
+		Con_Printf("%s: can't find symbol '%s'\n", __FUNCTION__, "CHookHandlerJit::amx_Push");
 	
 	if (!g_testPlugin)
-		Sys_Error("%s: can't find amxx test plugin\n", __FUNCTION__);
+		Con_Printf("%s: can't find amxx test plugin\n", __FUNCTION__);
 
 	g_fwdBeginTest = g_amxxapi.RegisterSPForwardByName(g_testPlugin, "rp_begin_test", FP_CELL, FP_DONE);
 	g_fwdChangeRetHook = g_amxxapi.RegisterSPForwardByName(g_testPlugin, "change_rethook", FP_DONE);
