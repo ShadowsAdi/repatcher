@@ -79,11 +79,13 @@ bool CModule::loadSymbols()
 	
 	if (ldwModBase == 0)
 	{
+		// Not found on module on x64 maybe it's x32 module? Let's check.
 		SymLoadModule(g_hldsProcess.getHandle(), NULL, m_path, NULL, m_baseAddress, m_imageSize);
 	}
 	
 	if (ldwModBase == 0)
 	{
+		// No module found. ( x32 and x64 )
 		setError("Can't load symbols for module %s (%i)\n", m_name, GetLastError());
 		return false;
 	}

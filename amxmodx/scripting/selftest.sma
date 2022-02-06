@@ -24,7 +24,7 @@ public plugin_init()
 		server_print("Found library %d", iLib)
 	}
 
-	if((iAddress = rp_find_signature(iLib, "55 8B ? 6A ? 68 70 18")) == 0)
+	if((iAddress = rp_find_signature(iLib, "55 8B ? 6A ? 68 52 14")) == 0)
 	{
 		server_print("Invalid signature")
 	}
@@ -33,7 +33,7 @@ public plugin_init()
 		server_print("Found signature, %d", iAddress)
 	}
 	new Hook:i
-	if((i = rp_add_hook(iAddress, "char *__usercall SV_GetClientIDString@<eax>(client_s *client@<ecx>)", "SV_GetClientIDString", true)) == Hook:0)
+	if((i = rp_add_hook(iAddress, "void __cdecl SV_ConnectClient_internal()", "SV_ConnectClient_internal", true)) == Hook:0)
 	{
 		server_print("Invalid hook")
 	}
@@ -46,9 +46,7 @@ public plugin_init()
 	server_print("error: %s", szError)
 }
 
-public SV_GetClientIDString()
+public SV_ConnectClient_internal()
 {
-	server_print("called SV_GetClientIDString")
-
-	//rp_set_return(RP_SUPERCEDE) 
+	server_print("called SV_ConnectClient_internal")
 }
