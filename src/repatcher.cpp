@@ -399,14 +399,14 @@ void Test_ArgConversion()
 	void* func = g_repatcher->getSymbolAddress("Func_ArgConversion");
 
 	if (!func)
-		Sys_Error("%s: can't find Func_ArgConversion function\n", __FUNCTION__);
+		Con_Printf("%s: can't find Func_ArgConversion function\n", __FUNCTION__);
 
 	const char* desc = "void Func_ArgConversion(edict_t* a, int b@<eax>, const char *str, client_t* cl@<ecx>, CBaseMonster* pl, float f@st0, int x@xmm4, float f2)";
 	g_hpre = g_hookManager.createHook(func, desc, true, (void *)Hook_ArgConversion);
 	g_hpost = g_hookManager.createHook(func, desc, false, (void *)Hook_ArgConversion);
 
 	if (!g_hpre || !g_hpost)
-		Sys_Error("%s: can't create hooks.\n", __FUNCTION__);
+		Con_Printf("%s: can't create hooks.\n", __FUNCTION__);
 
 	Amx_BeginTest(test_conversion);
 	check_order = true;
@@ -415,9 +415,9 @@ void Test_ArgConversion()
 
 	int true_order[5] = {chook_pre, amxhook_pre, original_func, chook_post, amxhook_post};
 	if (memcmp(call_order, true_order, sizeof true_order))
-		Sys_Error("%s: invalid call order [%i|%i|%i|%i|%i], expected [%i|%i|%i|%i|%i].\n", __FUNCTION__, call_order[0], call_order[1], call_order[2], call_order[3], call_order[4], true_order[0], true_order[1], true_order[2], true_order[3], true_order[4]);
+		Con_Printf("%s: invalid call order [%i|%i|%i|%i|%i], expected [%i|%i|%i|%i|%i].\n", __FUNCTION__, call_order[0], call_order[1], call_order[2], call_order[3], call_order[4], true_order[0], true_order[1], true_order[2], true_order[3], true_order[4]);
 	if (g_called_func != (chook_pre|chook_post|amxhook_pre|amxhook_post|original_func))
-		Sys_Error("%s: not all functions are called %i.\n", __FUNCTION__, g_called_func);
+		Con_Printf("%s: not all functions are called %i.\n", __FUNCTION__, g_called_func);
 	Con_Printf("[RePatcher]: Test_ArgConversion passed.\n");
 }
 

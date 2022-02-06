@@ -515,6 +515,7 @@ const char* getPluginName(AMX* amx)
 
 char* getAmxStringTemp(AMX* amx, cell amx_addr, int* len)
 {
+	Con_DPrintf("function getAmxStringTemp");
 	cell* src = (cell *)(amx->base + (size_t)(((AMX_HEADER *)amx->base)->dat + amx_addr));
 	char* dest = (char *)(g_tempMemory + g_tempUsed);
 	char* start = dest;
