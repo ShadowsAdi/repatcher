@@ -341,6 +341,9 @@ int Hook_ArgConversion(int a, int b, const char *str, int cl, int pl, float f, i
 
 void Func_ArgConversion(edict_t* a, const char *str, void* pl, float f2)
 {
+	#ifdef SELF_TEST
+	Con_Printf("function ArgConversion");
+	#endif
 	int b;
 	client_t* client;
 	float f;
@@ -396,7 +399,11 @@ void Call_ArgConversion()
 
 void Test_ArgConversion()
 {
+	#ifdef _WIN32
+	void* func = g_repatcher->findStringReference("function ArgConversion");
+	#else
 	void* func = g_repatcher->getSymbolAddress("Func_ArgConversion");
+	#endif
 
 	if (!func)
 		Sys_Error("%s: can't find Func_ArgConversion function\n", __FUNCTION__);
@@ -564,6 +571,9 @@ void Hook_Arg(int arg)
 
 void Func_Arg(int arg)
 {
+	#ifdef SELF_TEST
+	Con_Printf("function Func_Arg");
+	#endif
 	switch (testarg_id)
 	{
 	case 0:
@@ -601,7 +611,11 @@ void Test_Args()
 	};
 
 	Amx_BeginTest(test_args);
+	#ifdef _WIN32
+	void* func = g_repatcher->findStringReference("function Func_Arg");
+	#else
 	void* func = g_repatcher->getSymbolAddress("Func_Arg");
+	#endif
 
 	if (!func)
 		Sys_Error("%s: can't find Func_Arg function\n", __FUNCTION__);

@@ -366,6 +366,9 @@ size_t CHookHandlerJit::push16(register_e reg, bool regsChanged, AMX* amx)
 
 NOINLINE size_t CHookHandlerJit::amx_Push(AMX* amx, register_e reg, bool isarray)
 {
+	#ifdef SELF_TEST
+	Con_DPrintf("Pushing CHOOK");
+	#endif
 	AMX_HEADER* hdr = (AMX_HEADER *)amx->base;
 	Reg32 temp;
 	Reg32 value;
