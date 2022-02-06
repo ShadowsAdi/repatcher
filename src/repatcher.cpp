@@ -122,11 +122,11 @@ bool Repatcher_Init()
 		return false;
 	}
 	
-	bool ParsedData = false
+	bool ParsedData = false;
 	
 	if(Parse_HldsData())
 	{
-		ParsedData = true
+		ParsedData = true;
 	}
 
 	if (g_rehldsEngine)
