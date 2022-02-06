@@ -476,6 +476,17 @@ static cell AMX_NATIVE_CALL rp_get_error(AMX *amx, cell *params)
 	return g_amxxapi.SetAmxString(amx, params[1], g_lastError, params[2]);
 }
 
+static cell AMX_NATIVE_CALL rp_get_system(AMX *amx, cell *params)
+{
+	int iType;
+	#ifdef _WIN32
+	iType = 0;
+	#else 
+	iType = 1;
+	#endif 
+	return iType;
+}
+
 // Self_Test
 #ifdef SELF_TEST
 static cell AMX_NATIVE_CALL rp_i_am_here(AMX *amx, cell *params)
@@ -522,6 +533,7 @@ static AMX_NATIVE_INFO RePatcherNatives[] =
 	{"rp_set_raw_return",		rp_set_raw_return},
 	{"rp_set_arg",				rp_set_arg},
 	{"rp_get_error",			rp_get_error},
+	{"rp_get_system",           rp_get_system},
 
 #ifdef SELF_TEST
 	{"rp_i_am_here",			rp_i_am_here},
