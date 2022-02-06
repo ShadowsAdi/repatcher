@@ -57,7 +57,7 @@ typedef void* modhandle_t;
 #include "jitasm.h"
 #include "udis86.h"
 
-#include "rehlds_api.h"
+#include "sdk/rehlds_api.h"
 #include "chldsprocess.h"
 #include "utils.h"
 #include "chookmanager.h"
