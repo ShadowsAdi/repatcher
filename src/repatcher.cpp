@@ -41,10 +41,9 @@ bool Parse_HldsData()
 	g_conversiondata.clients = *(dword *)((dword)addr + 2);
 
 	// 47                                            inc     edi
-	// 81 C3 18 50 00 00                             add     esi, 5018ho
-	// 81 C6 18 50 00 00
+	// 81 C6 18 50 00 00							 add     esi, 5018ho
 	// B4 36 C6 04 
-	addr = g_engine->findPattern(addr, 128, "47 81 C6 18 ? ? 00 00");
+	addr = g_engine->findPattern(addr, 128, "47 81 C6 18 ? 00 00");
 	if(!addr)
 	{
 		Con_Printf("[RePatcher]: Can't find sizeof(client_t).\n");
