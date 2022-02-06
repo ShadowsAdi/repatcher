@@ -74,6 +74,7 @@ void CModule::closeHandle()
 #ifdef _WIN32
 bool CModule::loadSymbols()
 {
+	SymInitialize(g_hldsProcess.getHandle(), NULL, FALSE);
 	DWORD64 ldwModBase = SymLoadModule64(g_hldsProcess.getHandle(), NULL, m_path, NULL, m_baseAddress, m_imageSize);
 
 	if (ldwModBase == 0)

@@ -386,16 +386,6 @@ hookhandle_t* CHookManager::createHook(void* addr, const char* description, bool
 	return hook->addHandler(description, pre, amx, forward, flags);
 }
 
-hookhandle_t* CHookManager::createHook(void* addr, const char* description, bool pre, void* handler, int flags)
-{
-	if (!addr || !handler)
-		return NULL;
-	CHook* hook = hookAddr(addr, (flags & hf_force_addr) != 0);
-	if (!hook)
-		return NULL;
-	return hook->addHandler(description, pre, handler, flags);
-}
-
 bool CHookManager::removeHook(hookhandle_t* handler)
 {
 	if (!handler)
